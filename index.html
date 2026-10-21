@@ -3,69 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warszawa 1944 RP</title>
+    <title>Twoj Projekt Roleplay</title>
+    <!-- Czcionka Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #121212;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* CSS RESET & ZMIENNE */
+        * {
             margin: 0;
             padding: 0;
-            text-align: center;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
+
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --accent-red: #dc2626;
+            --accent-red-hover: #b91c1c;
+            --text-main: #f0f6fc;
+            --text-muted: #8b949e;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* NAWIGACJA */
         header {
-            background-color: #1f1f1f;
-            padding: 40px 20px;
-            border-bottom: 3px solid #8b0000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(13, 17, 23, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        h1 {
-            color: #b22222;
-            font-size: 2.5em;
-            margin: 0;
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            color: var(--text-main);
         }
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* STATYSTYKI */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto 80px auto;
             padding: 0 20px;
         }
-        p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #ccc;
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
         }
-        .btn-discord {
-            display: inline-block;
-            background-color: #5865F2;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 25px;
-            font-weight: bold;
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-red);
         }
-        .btn-discord:hover {
-            background-color: #4752C4;
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* O PROJEKCIE / FEATURES */
+        .features {
+            max-width: 1100px;
+            margin: 0 auto 100px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* CALL TO ACTION */
+        .cta-section {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 60px;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* STOPKA */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer nav {
+            margin-bottom: 15px;
+        }
+
+        footer nav a {
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
+    <!-- NAWIGACJA -->
     <header>
-        <h1>Warszawa 1944 Roleplay</h1>
+        <div class="logo">Sejm Roleplay</div>
+        <nav>
+            <ul>
+                <li><a href="#">Strona główna</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Regulaminy</a></li>
+                <li><a href="#">Discord</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="container">
-        <h2>Witaj w świecie Powstania Warszawskiego</h2>
-        <p>
-            Gra roleplay osadzona w realiach Powstania Warszawskiego. 
-            Wciel się w jedną z postaci i przeżyj historię Warszawy w sierpniu 1944 roku.
-        </p>
-        
-        <a href="TUTAJ_WKLEJ_LINK_DO_DISCORDA" class="btn-discord" target="_blank">Dołącz do Discorda</a>
-    </div>
+    <!-- NAGŁÓWEK GŁÓWNY (HERO) -->
+    <section class="hero">
+        <h1>Sejm Roleplay</h1>
+        <p>Jesteśmy największym polskim projektem politycznym na Robloxie, opartym na działalności parlamentu.</p>
+        <div class="btn-container">
+            <a href="https://discord.gg" target="_blank" class="btn btn-primary">Dołącz na Discord</a>
+            <a href="https://roblox.com" target="_blank" class="btn btn-secondary">Zagraj na Roblox</a>
+        </div>
+    </section>
+
+    <!-- STATYSTYKI -->
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Graczy na Roblox</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">45K+</div>
+            <div class="stat-label">Wizyt na Roblox</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Online na Discord</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">3K</div>
+            <div class="stat-label">Członków Discord</div>
+        </div>
+    </section>
+
+    <!-- O PROJEKCIE / OPIS -->
+    <section class="features">
+        <h2 class="section-title">O projekcie</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Odwzorowana mapa</h3>
+                <p>Wiernie odwzorowany budynek Sejmu i Senatu wraz z najważniejszymi salami i przestrzeniami dostępnymi dla graczy.</p>
+            </div>
+            <div class="card">
+                <h3>Rozbudowane ustawodawstwo</h3>
+                <p>Twórz, opiniuj i uchwalaj akty prawne, które stają się częścią funkcjonowania projektu.</p>
+            </div>
+            <div class="card">
+                <h3>Partie i politycy</h3>
+                <p>Dołącz do istniejącego ugrupowania lub załóż własne i rozwijaj swoją działalność polityczną wraz z innymi.</p>
+            </div>
+            <div class="card">
+                <h3>Rozbudowana społeczność</h3>
+                <p>Projekt rozwija się dzięki zaangażowaniu graczy, którzy każdego dnia tworzą nowe historie i wydarzenia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOŁĄCZ DO PROJEKTU -->
+    <section class="cta-section">
+        <h2>Dołącz do projektu</h2>
+        <p>Tysiące graczy współtworzy historię wirtualnej Polski. Wybierz swoją drogę – zostań parlamentarzystą, ministrem, liderem partii lub dziennikarzem politycznym.</p>
+        <div class="btn-container">
+            <a href="https://discord.gg" target="_blank" class="btn btn-primary">Dołącz na Discord</a>
+            <a href="https://roblox.com" target="_blank" class="btn btn-secondary">Zagraj na Roblox</a>
+        </div>
+    </section>
+
+    <!-- STOPKA -->
+    <footer>
+        <nav>
+            <a href="#">Regulamin</a>
+            <a href="#">Discord</a>
+            <a href="#">Roblox</a>
+            <a href="#">Polityka prywatności</a>
+        </nav>
+        <p>Projekt nie jest powiązany z żadną instytucją rządową.</p>
+    </footer>
 
 </body>
 </html>
