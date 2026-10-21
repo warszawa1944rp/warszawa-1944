@@ -1,323 +1,556 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twoj Projekt Roleplay</title>
-    <!-- Czcionka Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* CSS RESET & ZMIENNE */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sejm Roleplay — Projekt Roblox</title>
+<link rel="icon" type="image/png" href="./files/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./files/css2" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C0202E;--dred:#9A0018;
+  --bg:#F5F3F0;--paper:#FFFFFF;--border:#E2DED8;--ink:#1A1A1A;--sub:#555;--dim:#999;--dark:#111;
+  --shadow:0 12px 30px rgba(17,17,17,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%;height:auto}
 
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --accent-red: #dc2626;
-            --accent-red-hover: #b91c1c;
-            --text-main: #f0f6fc;
-            --text-muted: #8b949e;
-        }
+.nav{background:linear-gradient(to left,rgb(41,41,41),#000);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:100;box-shadow:0 2px 14px rgba(0,0,0,.16)}
+.nav-i{max-width:1200px;margin:0 auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:76px}
+.nav-logo{display:flex;align-items:center;gap:13px;flex-shrink:0}
+.logo-circle{width:70px;height:70px;display:flex;align-items:center;justify-content:center}
+.logo-circle img{max-height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(0,0,0,.28))}
+.logo-text strong{font-size:18px;font-weight:900;color:#fff;white-space:nowrap;letter-spacing:.01em}
+.nav-menu{display:flex;align-items:stretch;height:100%;margin-left:20px}
+.nav-menu a, .nav-dropdown-toggle{font-size:14px;color:#fff;padding:0 14px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:color .15s,border-color .15s,background .15s;cursor:pointer}
+.nav-menu a:hover, .nav-dropdown-toggle:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-menu a.on{color:var(--red);border-bottom-color:var(--red);font-weight:700}
+.nav-spacer{flex:1}
+.nav-btns{display:flex;gap:8px;flex-shrink:0;align-items:center}
+.nbtn{padding:9px 15px;font-size:12px;font-weight:800;border-radius:4px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;border:2px solid transparent;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.nbtn-disc{background:#5865F2;color:#fff}.nbtn-disc:hover{background:#4752C4}
+.nbtn-red{background:var(--red);color:#fff}.nbtn-red:hover{background:var(--dred)}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+/* --- SYSTEM DROPDOWN --- */
+.nav-item-dropdown {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+.nav-dropdown-toggle::after {
+  content: '▼';
+  font-size: 8px;
+  margin-left: 6px;
+  color: rgba(255,255,255,0.6);
+  transition: transform 0.2s;
+}
+.nav-item-dropdown:hover .nav-dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #1a1a1a;
+  border-top: 3px solid var(--red);
+  min-width: 230px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  display: none;
+  flex-direction: column;
+  z-index: 110;
+}
+.nav-dropdown-menu a {
+  padding: 12px 18px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  width: 100%;
+  display: block;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-dropdown-menu a:last-child {
+  border-bottom: none;
+}
+.nav-dropdown-menu a:hover {
+  background: var(--red);
+  color: #fff;
+}
+.nav-item-dropdown:hover .nav-dropdown-menu {
+  display: flex;
+}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+.hero{position:relative;height:600px;overflow:hidden;background:var(--dark)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;z-index:1}
+.slide.active{opacity:1;z-index:2}
+.slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.4)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.85) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.2) 100%);z-index:3}
+.hero-content{position:absolute;inset:0;z-index:4;display:flex;align-items:center;padding:0 40px}
 
-        /* NAWIGACJA */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 8%;
-            border-bottom: 1px solid var(--border-color);
-            background-color: rgba(13, 17, 23, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+.hero-text{max-width:650px;width:100%;padding-left:26px;position:relative}
+.hero-text::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:#ffffff}
+.hero-text::after{content:'';position:absolute;left:4px;top:0;bottom:0;width:4px;background:var(--red)}
 
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-main);
-        }
+.hero-logo{max-height:120px;width:auto;object-fit:contain;margin-bottom:12px;display:block;filter:drop-shadow(0 4px 15px rgba(0,0,0,0.4))}
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
+.hero-sub{font-size:clamp(15px,2vw,17px);color:rgb(255, 255, 255);font-weight:400;line-height:1.65;margin-bottom:20px;max-width:620px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.hbtn{padding:13px 24px;font-size:13.5px;font-weight:800;border-radius:4px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:8px;border:2px solid transparent;box-shadow:0 10px 24px rgba(0,0,0,.20)}
+.hbtn-red{background:#5865F2;color:#fff;border-color:#5865F2}.hbtn-red:hover{background:#4752C4;border-color:#4752C4}
+.hbtn-wh{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}.hbtn-wh:hover{border-color:#fff;background:rgba(255,255,255,0.1)}
 
-        nav a {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            transition: color 0.3s;
-        }
+.slider-controls{position:absolute;bottom:24px;right:40px;z-index:5;display:flex;align-items:center;gap:8px}
+.sl-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:none;cursor:pointer;transition:background .2s,transform .2s;padding:0}
+.sl-dot.on{background:#fff;transform:scale(1.2)}
+.sl-prev,.sl-next{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.sl-prev:hover,.sl-next:hover{background:rgba(255,255,255,.25)}
+.slide-caption{position:absolute;bottom:24px;left:40px;z-index:5;font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase}
 
-        nav a:hover {
-            color: var(--text-main);
-        }
+.statbar{background:var(--dark);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(0,0,0,.28)}
+.statbar-i{max-width:1200px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:repeat(4, 1fr)}
+.sitem{padding:22px 10px;border-right:1px solid rgba(255,255,255,.07);text-align:center;background:linear-gradient(to bottom,rgba(255,255,255,.035),rgba(255,255,255,0))}
+.sitem:last-child{border:none}
+.sitem-n{font-size:clamp(20px, 2.5vw, 26px);font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;line-height:1;font-family:'Merriweather',serif}
+.sitem-l{font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.1em;margin-top:6px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#4CD964;flex-shrink:0;animation:lpulse 2s infinite}
+@keyframes lpulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-        /* HERO SECTION */
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+.sec{padding:60px 20px}
+.w{max-width:1200px;margin:0 auto}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.sec-title{font-family:'Merriweather',serif;font-size:clamp(24px, 4vw, 32px);font-weight:700;line-height:1.25;margin-bottom:12px}
+.sec-desc{font-size:15px;color:var(--sub);line-height:1.6;max-width:600px;margin-bottom:30px}
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
+.about{background:#fff;border-top:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;background:transparent;border:none;box-shadow:none}
+.feat{background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:12px;padding:24px;transition:all .2s ease}
+.feat:hover{background:var(--paper);border-left-color:var(--red);box-shadow:0 8px 24px rgba(192,32,46,.12);transform:translateX(4px)}
+.feat-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:12px}
+.feat-ico{width:56px;height:56px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+.feat-ico img{width:36px;height:36px;object-fit:contain}
+.feat h3{font-size:16px;font-weight:700;line-height:1.2;color:var(--ink);margin:0}
+.feat p{font-size:13.5px;color:var(--sub);line-height:1.6;margin:0}
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
+.gallery{background:var(--bg);border-top:1px solid var(--border)}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.gi{position:relative;overflow:hidden;cursor:pointer;background:#ddd;aspect-ratio:16/9;border-radius:6px;border:1px solid var(--border);box-shadow:0 8px 20px rgba(17,17,17,.06)}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .4s,filter .3s;filter:brightness(.95)}
+.gi:hover img{transform:scale(1.03);filter:brightness(1)}
+.gi-cap{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:flex-end;padding:12px;transition:background .3s}
+.gi:hover .gi-cap{background:rgba(0,0,0,.5)}
+.gi-cap span{font-size:11px;color:#fff;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:0;transition:opacity .25s}
+.gi:hover .gi-cap span{opacity:1}
 
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:999;align-items:center;justify-content:center;padding:20px;cursor:pointer}
+.lb.on{display:flex}
+.lb-wrapper{position:relative;display:flex;align-items:center;justify-content:center;max-width:85vw;max-height:85vh;cursor:default}
+.lb img{max-height:85vh;max-width:100%;object-fit:contain;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 
-        .btn {
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
+.lb-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  color: #fff;
+  padding: 24px 20px 16px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  pointer-events: none;
+  font-family: 'Lato', sans-serif;
+}
 
-        .btn-primary {
-            background-color: var(--accent-red);
-            color: white;
-        }
+.lb-x{position:fixed;top:20px;right:20px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:50%;color:#fff;font-size:24px;cursor:pointer;width:50px;height:50px;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:1001}
+.lb-x:hover{background:var(--red)}
 
-        .btn-primary:hover {
-            background-color: var(--accent-red-hover);
-        }
+.lb-btn{position:fixed;top:50%;transform:translateY(-50%);background-color:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);width:54px;height:54px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:1000;user-select:none;background-repeat:no-repeat;background-position:center;background-size:24px}
+.lb-btn:hover{background-color:rgba(255,255,255,0.2);scale:1.05}
 
-        .btn-secondary {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-        }
+.lb-prev{
+  left:24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='19' y1='12' x2='5' y2='12'%3E%3C/line%3E%3Cpolyline points='12 19 5 12 12 5'%3E%3C/polyline%3E%3C/svg%3E");
+}
+.lb-next{
+  right:24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3Cpolyline points='12 5 19 12 12 19'%3E%3C/polyline%3E%3C/svg%3E");
+}
 
-        .btn-secondary:hover {
-            border-color: var(--text-muted);
-        }
+.cta{position:relative;overflow:hidden;padding:80px 20px;text-align:center}
+.cta-bg{position:absolute;inset:0;background-image:url('./files/zdj3.png');background-size:cover;background-position:center;filter:brightness(.3) saturate(.7);z-index:0}
+.cta-tint{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(154,0,24,.4) 0%,rgba(0,0,0,.3) 50%,rgba(154,0,24,.2) 100%)}
+.cta::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);z-index:2}
+.cta-inner{position:relative;z-index:3;max-width:700px;margin:0 auto}
+.cta h2{font-family:'Merriweather',serif;font-size:clamp(26px, 4vw, 36px);font-weight:700;color:#fff;margin-bottom:12px}
+.cta p{font-size:15px;color:rgba(255,255,255,.8);margin-bottom:30px;font-weight:300}
+.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.cbtn{padding:12px 28px;font-size:13.5px;font-weight:700;border-radius:3px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px;border:2px solid transparent}
+.cbtn-red{background:#5865F2;color:#fff;border-color:#5865F2}.cbtn-red:hover{background:#4752C4;border-color:#4752C4}
+.cbtn-wh{background:#fff;color:var(--ink)}.cbtn-wh:hover{background:#f0ebe2}
 
-        /* STATYSTYKI */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto 80px auto;
-            padding: 0 20px;
-        }
+footer{background:#111;padding:30px 20px}
+.foot-i{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.foot-left{display:flex;align-items:center;gap:12px}
+.foot-left .logo-circle{width:70px;height:70px}
+.foot-txt{font-size:15px;font-weight:800;color:rgba(255,255,255,.72)}
+.foot-txt small{font-size:11px;font-weight:400;color:rgba(255,255,255,.42);display:block;margin-top:2px}
+.foot-links{display:flex;gap:20px}
+.foot-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color .18s}
+.foot-links a:hover{color:#fff}
+.foot-note{max-width:1200px;margin:22px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:rgba(255,255,255,.36);line-height:1.5}
 
-        .stat-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--accent-red);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        /* O PROJEKCIE / FEATURES */
-        .features {
-            max-width: 1100px;
-            margin: 0 auto 100px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
-        }
-
-        .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* CALL TO ACTION */
-        .cta-section {
-            background-color: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-            padding: 80px 20px;
-            margin-bottom: 60px;
-        }
-
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .cta-section p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 30px auto;
-        }
-
-        /* STOPKA */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        footer nav {
-            margin-bottom: 15px;
-        }
-
-        footer nav a {
-            margin: 0 10px;
-        }
-    </style>
+@media (max-width: 992px) {
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 915px) {
+  .nav-menu { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .statbar-i { grid-template-columns: repeat(2, 1fr); }
+  .sitem { border-bottom: 1px solid rgba(255,255,255,.05); }
+  .sitem:nth-child(2n) { border-right: none; }
+  .sitem:nth-child(3), .sitem:nth-child(4) { border-bottom: none; }
+}
+@media (max-width: 580px) {
+  .hero { height: auto; min-height: 480px; padding: 40px 0; display: flex; align-items: center; }
+  .hero-content { position: relative; inset: auto; padding: 0 20px; }
+  .slider-controls, .slide-caption { display: none; }
+  .nav-btns { display: none; }
+  .nav-i { justify-content: center; height:70px; }
+  .logo-circle { width:70px; height:70px; }
+  .hero-text { padding-left:16px; }
+  .gal-grid { grid-template-columns: 1fr; }
+  .statbar-i { grid-template-columns: 1fr; }
+  .sitem { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,.05) !important; }
+  .sitem:last-child { border-bottom: none !important; }
+  .foot-i { flex-direction: column; text-align: center; justify-content: center; }
+  .foot-left { flex-direction: column; gap: 8px; }
+  .foot-links { justify-content: center; width: 100%; margin-top: 5px; }
+  .feat { padding: 18px; }
+  .feat-ico { width: 48px; height: 48px; }
+  .feat-ico img { width: 30px; height: 30px; }
+  .feat h3 { font-size: 15px; }
+  .feat p { font-size: 12px; }
+  .lb-btn { width: 44px; height: 44px; }
+  .lb-prev { left: 10px; }
+  .lb-next { right: 10px; }
+}
+</style>
 </head>
 <body>
 
-    <!-- NAWIGACJA -->
-    <header>
-        <div class="logo">Sejm Roleplay</div>
-        <nav>
-            <ul>
-                <li><a href="#">Strona główna</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Regulaminy</a></li>
-                <li><a href="#">Discord</a></li>
-            </ul>
-        </nav>
-    </header>
+<nav class="nav">
+  <div class="nav-i">
+    <div class="nav-logo">
+      <div class="logo-circle"><img src="./files/logo.png" alt="logo"></div>
+      <div class="logo-text"><strong>Sejm Roleplay</strong></div>
+    </div>
+    <div class="nav-menu">
+      <a href="#" class="on">Strona główna</a>
+      <a href="#o-projekcie">FAQ</a>
+      
+      <div class="nav-item-dropdown">
+        <span class="nav-dropdown-toggle">Regulaminy</span>
+        <div class="nav-dropdown-menu">
+          <a href="https://docs.google.com/document/d/1dHNse4GUx9RMj5EOXJEIaXZFfgEXf-fVhvZwFVSrYxo/edit?tab=t.0" target="_blank">Regulamin projektu</a>
+          <a href="https://docs.google.com/document/d/1ry81RM58L8aHJYVEmdssglQEi3v3Lh84Gpwf6N6pXQE/edit?tab=t.0">Regulamin administracji</a>
+          <a href="#">Regulamin partii</a>
+          <a href="#">Regulamin mediów</a>
+          <a href="https://docs.google.com/document/d/1UtaZ48eyAviicpvOH5a9RJXohXVjCW5aNokX5RQ0zPY/edit?usp=sharing">Regulamin sądownictwa</a>
+          <a href="#">Regulamin GUS</a>
+        </div>
+      </div>
+      </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-btns">
+      <a href="https://discord.gg/sejmrp" target="_blank" rel="noopener noreferrer" class="nbtn nbtn-disc"><img src="./files/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" style="width:18px;height:14px;object-fit:contain;filter:brightness(0) invert(1)"> Discord</a>
+      <a href="https://www.roblox.com/pl/communities/786712316/Sejm-Roleplay" target="_blank" rel="noopener noreferrer" class="nbtn nbtn-red"><img src="./files/roblox.png" style="width:16px;height:16px;object-fit:contain;filter:brightness(0) invert(1)"> Zagraj</a>
+    </div>
+  </div>
+</nav>
 
-    <!-- NAGŁÓWEK GŁÓWNY (HERO) -->
-    <section class="hero">
-        <h1>Sejm Roleplay</h1>
-        <p>Jesteśmy największym polskim projektem politycznym na Robloxie, opartym na działalności parlamentu.</p>
-        <div class="btn-container">
-            <a href="https://discord.gg" target="_blank" class="btn btn-primary">Dołącz na Discord</a>
-            <a href="https://roblox.com" target="_blank" class="btn btn-secondary">Zagraj na Roblox</a>
-        </div>
-    </section>
+<section class="hero">
+    <div class="slide">
+    <img src="./files/zdj1.png" alt="Hall główny">
+  </div>
+    <div class="slide">
+    <img src="./files/zdj2.png" alt="Hall główny">
+  </div>
+    <div class="slide">
+    <img src="./files/zdj3.png" alt="Sala Konferencyjna">
+  </div>
+    <div class="slide active">
+    <img src="./files/zdj4.png" alt="Korytarz Marszałkowski">
+  </div>
+    <div class="slide">
+    <img src="./files/zdj5.png" alt="Sala im. Konstytucji 3 maja">
+  </div>
+    <div class="slide">
+    <img src="./files/zdj8.png" alt="Łącznik Palarni Dolnej">
+  </div>
+    <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <img src="./files/logo2.png" alt="Sejm Roleplay Logo" class="hero-logo">
+      <p class="hero-sub">Jesteśmy największym polskim projektem politycznym na Robloxie, opartym na działalności parlamentu.</p>
+      <div class="hero-btns">
+        <a href="https://discord.gg/sejmrp" target="_blank" rel="noopener noreferrer" class="hbtn hbtn-red"><img src="./files/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" style="width:18px;height:14px;object-fit:contain;filter:brightness(0) invert(1)"> Dołącz na Discord</a>
+        <a href="https://www.roblox.com/pl/communities/786712316/Sejm-Roleplay" target="_blank" rel="noopener noreferrer" class="hbtn hbtn-wh"><img src="./files/roblox.png" style="width:16px;height:16px;object-fit:contain;filter:brightness(0) invert(1)"> Zagraj na Roblox</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide-caption" id="slide-caption">Korytarz Marszałkowski</div>
+  <div class="slider-controls">
+    <button class="sl-prev" onclick="slideMove(-1)">←</button>
+        <button class="sl-dot" onclick="slideTo(0)"></button>
+        <button class="sl-dot" onclick="slideTo(1)"></button>
+        <button class="sl-dot" onclick="slideTo(2)"></button>
+        <button class="sl-dot on" onclick="slideTo(3)"></button>
+        <button class="sl-dot" onclick="slideTo(4)"></button>
+        <button class="sl-dot" onclick="slideTo(5)"></button>
+        <button class="sl-next" onclick="slideMove(1)">→</button>
+  </div>
+</section>
 
-    <!-- STATYSTYKI -->
-    <section class="stats">
-        <div class="stat-card">
-            <div class="stat-number">0</div>
-            <div class="stat-label">Graczy na Roblox</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">45K+</div>
-            <div class="stat-label">Wizyt na Roblox</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">100+</div>
-            <div class="stat-label">Online na Discord</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">3K</div>
-            <div class="stat-label">Członków Discord</div>
-        </div>
-    </section>
+<div class="statbar">
+  <div class="statbar-i">
+        <div class="sitem">
+      <div class="sitem-n">
+        0                <span class="live-dot"></span>
+              </div>
+      <div class="sitem-l">Graczy na Roblox</div>
+    </div>
+        <div class="sitem">
+      <div class="sitem-n">
+        45K+              </div>
+      <div class="sitem-l">Wizyt na Roblox</div>
+    </div>
+        <div class="sitem">
+      <div class="sitem-n">
+        <span id="d-online">573</span>                <span class="live-dot"></span>
+              </div>
+      <div class="sitem-l">Online na Discord</div>
+    </div>
+        <div class="sitem">
+      <div class="sitem-n">
+        <span id="d-members">3K</span>              </div>
+      <div class="sitem-l">Członków Discord</div>
+    </div>
+      </div>
+</div>
 
-    <!-- O PROJEKCIE / OPIS -->
-    <section class="features">
-        <h2 class="section-title">O projekcie</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Odwzorowana mapa</h3>
-                <p>Wiernie odwzorowany budynek Sejmu i Senatu wraz z najważniejszymi salami i przestrzeniami dostępnymi dla graczy.</p>
-            </div>
-            <div class="card">
-                <h3>Rozbudowane ustawodawstwo</h3>
-                <p>Twórz, opiniuj i uchwalaj akty prawne, które stają się częścią funkcjonowania projektu.</p>
-            </div>
-            <div class="card">
-                <h3>Partie i politycy</h3>
-                <p>Dołącz do istniejącego ugrupowania lub załóż własne i rozwijaj swoją działalność polityczną wraz z innymi.</p>
-            </div>
-            <div class="card">
-                <h3>Rozbudowana społeczność</h3>
-                <p>Projekt rozwija się dzięki zaangażowaniu graczy, którzy każdego dnia tworzą nowe historie i wydarzenia.</p>
-            </div>
+<section class="sec about" id="o-projekcie">
+  <div class="w">
+    <div class="sec-label">O projekcie</div>
+    <h2 class="sec-title">Czym jest Sejm Roleplay?</h2>
+    <p class="sec-desc">Jesteśmy społecznością w Roblox, która odgrywa realistyczną politykę w odtworzonym Sejmie RP. Debatujemy, tworzymy ustawy i rywalizujemy w wyborach, zachowując klimat prawdziwego parlamentu.</p>
+    <div class="about-grid">
+            <div class="feat">
+        <div class="feat-top">
+          <div class="feat-ico">
+            <img src="./files/landmark.png" alt="Odwzorowana mapa">
+          </div>
+          <h3>Odwzorowana mapa</h3>
         </div>
-    </section>
-
-    <!-- DOŁĄCZ DO PROJEKTU -->
-    <section class="cta-section">
-        <h2>Dołącz do projektu</h2>
-        <p>Tysiące graczy współtworzy historię wirtualnej Polski. Wybierz swoją drogę – zostań parlamentarzystą, ministrem, liderem partii lub dziennikarzem politycznym.</p>
-        <div class="btn-container">
-            <a href="https://discord.gg" target="_blank" class="btn btn-primary">Dołącz na Discord</a>
-            <a href="https://roblox.com" target="_blank" class="btn btn-secondary">Zagraj na Roblox</a>
+        <p>Wiernie odwzorowany budynek Sejmu i Senatu wraz z najważniejszymi salami i przestrzeniami dostępnymi dla graczy.</p>
+      </div>
+            <div class="feat">
+        <div class="feat-top">
+          <div class="feat-ico">
+            <img src="./files/form.png" alt="Rozbudowane ustawodawstwo">
+          </div>
+          <h3>Rozbudowane ustawodawstwo</h3>
         </div>
-    </section>
+        <p>Twórz, opiniuj i uchwalaj akty prawne, które stają się częścią funkcjonowania projektu.</p>
+      </div>
+            <div class="feat">
+        <div class="feat-top">
+          <div class="feat-ico">
+            <img src="./files/handshake.png" alt="Partie i politycy">
+          </div>
+          <h3>Partie i politycy</h3>
+        </div>
+        <p>Dołącz do istniejącego ugrupowania lub załóż własne i rozwijaj swoją działalność polityczną wraz z innymi.</p>
+      </div>
+            <div class="feat">
+        <div class="feat-top">
+          <div class="feat-ico">
+            <img src="./files/users-round.png" alt="Rozbudowana społeczność">
+          </div>
+          <h3>Rozbudowana społeczność</h3>
+        </div>
+        <p>Projekt rozwija się dzięki zaangażowaniu graczy, którzy każdego dnia tworzą nowe historie i wydarzenia.</p>
+      </div>
+          </div>
+  </div>
+</section>
 
-    <!-- STOPKA -->
-    <footer>
-        <nav>
-            <a href="#">Regulamin</a>
-            <a href="#">Discord</a>
-            <a href="#">Roblox</a>
-            <a href="#">Polityka prywatności</a>
-        </nav>
-        <p>Projekt nie jest powiązany z żadną instytucją rządową.</p>
-    </footer>
+<section class="sec gallery" id="galeria">
+  <div class="w">
+    <div class="sec-label">Galeria</div>
+    <h2 class="sec-title">Screenshoty z gry</h2>
+    <div class="gal-grid">
+            <div class="gi" onclick="lbOpen(0)">
+        <img src="./files/zdj1.png" alt="Hall główny" loading="lazy">
+        <div class="gi-cap"><span>Hall główny</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(1)">
+        <img src="./files/zdj2.png" alt="Hall główny" loading="lazy">
+        <div class="gi-cap"><span>Hall główny</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(2)">
+        <img src="./files/zdj3.png" alt="Sala Konferencyjna" loading="lazy">
+        <div class="gi-cap"><span>Sala Konferencyjna</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(3)">
+        <img src="./files/zdj4.png" alt="Korytarz Marszałkowski" loading="lazy">
+        <div class="gi-cap"><span>Korytarz Marszałkowski</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(4)">
+        <img src="./files/zdj5.png" alt="Sala im. Konstytucji 3 maja" loading="lazy">
+        <div class="gi-cap"><span>Sala im. Konstytucji 3 maja</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(5)">
+        <img src="./files/zdj6.png" alt="Sala Posiedzeń Sejmu" loading="lazy">
+        <div class="gi-cap"><span>Sala Posiedzeń Sejmu</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(6)">
+        <img src="./files/zdj7.png" alt="Sala Posiedzeń Senatu" loading="lazy">
+        <div class="gi-cap"><span>Sala Posiedzeń Senatu</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(7)">
+        <img src="./files/zdj8.png" alt="Łącznik Palarni Dolnej" loading="lazy">
+        <div class="gi-cap"><span>Łącznik Palarni Dolnej</span></div>
+      </div>
+            <div class="gi" onclick="lbOpen(8)">
+        <img src="./files/zdj9.png" alt="Korytarz Kancelarii Sejmu" loading="lazy">
+        <div class="gi-cap"><span>Korytarz Kancelarii Sejmu</span></div>
+      </div>
+          </div>
+  </div>
+</section>
 
-</body>
-</html>
+<div class="lb" id="lb" onclick="lbClose()">
+  <button class="lb-x" onclick="lbClose()">✕</button>
+  <button class="lb-btn lb-prev" onclick="lbMove(-1); event.stopPropagation();"></button>
+  <div class="lb-wrapper" onclick="event.stopPropagation()">
+    <img src="" id="lb-img" alt="">
+    <div class="lb-caption" id="lb-caption"></div>
+  </div>
+  <button class="lb-btn lb-next" onclick="lbMove(1); event.stopPropagation();"></button>
+</div>
+
+<section class="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-tint"></div>
+  <div class="cta-inner">
+    <h2>Dołącz do projektu</h2>
+    <p>Tysiące graczy współtworzy historię wirtualnej Polski. Wybierz swoją drogę - zostań parlamentarzystą, ministrem, liderem partii lub dziennikarzem politycznym.</p>
+    <div class="cta-btns">
+      <a href="https://discord.gg/sejmrp" target="_blank" rel="noopener noreferrer" class="cbtn cbtn-red"><img src="./files/636e0a6a49cf127bf92de1e2_icon_clyde_blurple_RGB.png" style="width:18px;height:14px;object-fit:contain;filter:brightness(0) invert(1)"> Dołącz na Discord</a>
+      <a href="https://www.roblox.com/pl/communities/786712316/Sejm-Roleplay" target="_blank" rel="noopener noreferrer" class="cbtn cbtn-wh"><img src="./files/roblox.png" style="width:16px;height:16px;object-fit:contain;filter:brightness(0) invert(0)"> Zagraj na Roblox</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-i">
+    <div class="foot-left">
+      <div class="logo-circle"><img src="./files/logo.png" alt="logo"></div>
+      <div class="foot-txt">
+        Sejm Roleplay        <small>Projekt Roblox</small>
+      </div>
+    </div>
+    <div class="foot-links">
+      <a href="https://docs.google.com/document/d/1dHNse4GUx9RMj5EOXJEIaXZFfgEXf-fVhvZwFVSrYxo/edit?tab=t.0" target="_blank" rel="noopener noreferrer">Regulamin</a>
+      <a href="https://discord.gg/sejmrp" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://www.roblox.com/pl/communities/786712316/Sejm-Roleplay" target="_blank" rel="noopener noreferrer">Roblox</a>
+      <a href="#">Warunki korzystania</a>
+      <a href="#">Polityka prywatności</a>
+    </div>
+  </div>
+  <div class="foot-note">Projekt nie jest powiązany z żadną instytucją rządową.</div>
+</footer>
+
+<script>
+const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.sl-dot'),cap=document.getElementById('slide-caption');
+const captions=["Hall główny","Hall główny","Sala Konferencyjna","Korytarz Marszałkowski","Sala im. Konstytucji 3 maja","Łącznik Palarni Dolnej"];
+let cur=0,timer;
+function slideTo(n){if(!slides.length || !dots.length) return; slides[cur].classList.remove('active');dots[cur].classList.remove('on');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur].classList.add('on');if(cap) cap.textContent=captions[cur];resetTimer()}
+function slideMove(d){slideTo(cur+d)}
+function resetTimer(){clearInterval(timer);timer=setInterval(()=>slideTo(cur+1),5000)}
+resetTimer();
+
+// LOGIKA DLA GALERII I LIGHTBOXA - Z POPRAWIONYMI ŚCIEŻKAMI
+const galeriaData = [["./files/zdj1.png","Hall główny"],["./files/zdj2.png","Hall główny"],["./files/zdj3.png","Sala Konferencyjna"],["./files/zdj4.png","Korytarz Marszałkowski"],["./files/zdj5.png","Sala im. Konstytucji 3 maja"],["./files/zdj6.png","Sala Posiedzeń Sejmu"],["./files/zdj7.png","Sala Posiedzeń Senatu"],["./files/zdj8.png","Łącznik Palarni Dolnej"],["./files/zdj9.png","Korytarz Kancelarii Sejmu"]];
+let currentGalIndex = 0;
+const lbContainer = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-caption');
+
+function lbOpen(index) {
+  currentGalIndex = index;
+  lbUpdate();
+  lbContainer.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function lbClose() {
+  lbContainer.classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+function lbMove(direction) {
+  currentGalIndex = (currentGalIndex + direction + galeriaData.length) % galeriaData.length;
+  lbUpdate();
+}
+
+function lbUpdate() {
+  lbImg.src = galeriaData[currentGalIndex][0];
+  lbCap.textContent = galeriaData[currentGalIndex][1];
+}
+
+document.addEventListener('keydown', e => {
+  if (!lbContainer.classList.contains('on')) return;
+  if (e.key === 'Escape') lbClose();
+  if (e.key === 'ArrowRight') lbMove(1);
+  if (e.key === 'ArrowLeft') lbMove(-1);
+});
+
+(async () => {
+  const raw  = 'sejmrp';
+  const code = raw.replace(/^(https?:\/\/)?(www\.)?discord\.(gg|com\/invite)\//i, '').trim();
+  const elM = document.getElementById('d-members');
+  const elO = document.getElementById('d-online');
+
+  const fallback = setTimeout(() => {
+    if (elM && elM.textContent === '…') elM.textContent = '—';
+    if (elO && elO.textContent === '…') elO.textContent = '—';
+  }, 4000);
+
+  if (!code || code === 'TWOJ_KOD_ZAPROSZENIA') {
+    clearTimeout(fallback);
+    if (elM) elM.textContent = '—';
+    if (elO) elO.textContent = '—';
+    return;
+  }
+
+  try {
+    const r = await fetch(`https://discord.com/api/v9/invites/${code}?with_counts=true`, { headers: { 'Accept': 'application/json' } });
+    clearTimeout(fallback);
+    if (!r.ok) { if (elM) elM.textContent = '—'; if (elO) elO.textContent = '—'; return; }
+    const d = await r.json();
+    const fmt = n => n >= 1000 ? Math.round(n/100)/10 + 'K' : String(n);
+    if (elM && d.approximate_member_count  != null) elM.textContent = fmt(d.approximate_member_count);
+    if (elO && d.approximate_presence_count != null) elO.textContent = fmt(d.approximate_presence_count);
+  } catch(e) {
+    clearTimeout(fallback);
+    if (elM) elM.textContent = '—'; if (elO) elO.textContent = '—';
+  }
+})();
+</script>
+
+</body></html>
